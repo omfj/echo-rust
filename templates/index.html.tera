@@ -1,0 +1,26 @@
+{% extends "components/base-layout" %}
+
+{% block head%}
+<title>echo::rust(🦀)</title>
+{% endblock %}
+
+{% block content %}
+<main class="max-w-3xl w-full mx-auto py-16 px-4">
+  <h1 class="text-3xl font-bold mb-8">echo::rust(🦀)</h1>
+
+  <p class="text-gray-300 text-lg">
+    Velkommen til echo::rust(🦀)! Vi er en interessegruppe i echo &mdash; Linjeforeningen for Informatikk
+    ved Universitet i Bergen. Sammen er vi en gjeng med studenter som er interessert i Rust-programmeringsspråket.
+    I løpet av semesteret prøver vi å arrangere små workshops og foredrag for å lære mer om Rust og dele kunnskapen vår.
+  </p>
+
+  <h2 class="text-2xl font-bold mt-8 mb-4">Hva er Rust?</h2>
+
+  <p class="text-gray-300 text-lg">
+    Rust er et systemprogrammeringsspråk som fokuserer på ytelse, pålitelighet og produktivitet. Rust er kjent for
+    sin evne til å forhindre null-pointer exceptions. Språket er designet for å være trygt, samtidig som det gir
+    deg kontroll over systemressursene. Rust er et flott språk for å skrive systemprogramvare, nettverksapplikasjoner,
+    webtjenester og mye mer.
+  </p>
+</main>
+{% endblock %}
