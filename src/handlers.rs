@@ -1,4 +1,4 @@
-use crate::{xml::Xml, AppState};
+use crate::{models::RSSToml, xml::Xml, AppState};
 
 use std::sync::Arc;
 
@@ -20,6 +20,10 @@ pub async fn fallback(State(state): State<Arc<AppState>>) -> Result<Html<String>
 }
 
 pub async fn feed() -> Result<Xml<String>, StatusCode> {
+    let posts_toml = include_str!("../rss.toml");
+    let posts: RSSToml =
+        toml::de::from_str(posts_toml).map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+
     let body = r#"<?xml version="1.0" ?>
 <rss
     xmlns:dc="http://purl.org/dc/elements/1.1/"

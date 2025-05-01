@@ -7,6 +7,7 @@ use tower_http::services::ServeDir;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 mod handlers;
+mod models;
 mod xml;
 
 pub struct AppState {

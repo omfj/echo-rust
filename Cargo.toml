@@ -8,7 +8,9 @@ axum = "0.8.3"
 bytes = "1.10.1"
 http-body = "1.0.1"
 minijinja = "2.9.0"
+serde = { version = "1.0.219", features = ["derive"] }
 tokio = { version = "1.44.2", features = ["full"] }
+toml = "0.8.22"
 tower = { version = "0.5.2", features = ["util"] }
 tower-http = { version = "0.6.2", features = ["fs", "trace"] }
 tracing = "0.1.41"
