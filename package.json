@@ -2,7 +2,8 @@
   "name": "echo-rust",
   "version": "1.0.0",
   "scripts": {
-    "dev": "cargo watch -x run",
+    "dev": "cargo watch -x \"run --bin echo-rust\"",
+    "generate-post": "cargo run --bin generate",
     "css-build": "npx @tailwindcss/cli -i ./static/input.css -o ./static/styles.css"
   },
   "dependencies": {
