@@ -1,6 +1,7 @@
 {% extends "components/base-layout" %}
+{% from "components/post-card" import post_card %}
 
-{% block head%}
+{% block head %}
 <title>echo::rust(🦀)</title>
 {% endblock %}
 
@@ -18,5 +19,13 @@
     Besøk <a class="text-blue-500 hover:underline" href="/feed">vår RSS-feed</a> for å holde deg oppdatert på kommende
     arrangementer.
   </p>
+
+  <ul>
+    {% for post in posts %}
+    <li>
+      {{ post_card(post) }}
+    </li>
+    {% endfor %}
+  </ul>
 </main>
 {% endblock %}

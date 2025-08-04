@@ -4,7 +4,7 @@ use uuid::Uuid;
 
 fn main() -> anyhow::Result<(), std::io::Error> {
     let id = Uuid::new_v4().to_string();
-    let date = get_date();
+    let date = get_date_2822();
 
     let mut rss_file = std::fs::OpenOptions::new().append(true).open("rss.toml")?;
 
@@ -20,8 +20,8 @@ fn main() -> anyhow::Result<(), std::io::Error> {
     Ok(())
 }
 
-fn get_date() -> String {
+fn get_date_2822() -> String {
     let now: DateTime<Utc> = Utc::now();
-    let rfc822_format = StrftimeItems::new("%a, %d %b %Y %H:%M:%S GMT");
-    now.format_with_items(rfc822_format).to_string()
+    let rfc2822_format = StrftimeItems::new("%a, %d %b %Y %H:%M:%S GMT");
+    now.format_with_items(rfc2822_format).to_string()
 }

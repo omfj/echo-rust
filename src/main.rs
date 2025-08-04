@@ -1,5 +1,5 @@
 use crate::handlers::{fallback, feed, root};
-use crate::models::PostDatabase;
+use crate::models::RSSImporter;
 
 use axum::{routing::get, Router};
 use handlers::single_post;
@@ -9,12 +9,13 @@ use tower::ServiceBuilder;
 use tower_http::{services::ServeDir, trace::TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
+mod error;
 mod handlers;
 mod models;
 mod xml;
 
 pub struct AppState {
-    pub post_db: PostDatabase,
+    pub post_db: RSSImporter,
     pub env: Environment<'static>,
     pub last_build_date: String,
 }
@@ -31,7 +32,7 @@ async fn main() {
         .init();
 
     let last_build_date = env!("BUILD_DATE").to_string();
-    let post_db = PostDatabase::init();
+    let post_db = RSSImporter::init();
     let env = create_env();
     let serve_public = ServeDir::new("static");
     let app_state = Arc::new(AppState {
@@ -58,11 +59,19 @@ async fn main() {
 fn create_env() -> Environment<'static> {
     let mut env = Environment::new();
 
+    minijinja_contrib::add_to_environment(&mut env);
+
     let templates = [
+        // Components
         (
             "components/base-layout",
             include_str!("../templates/components/base-layout.html.j2"),
         ),
+        (
+            "components/post-card",
+            include_str!("../templates/components/post-card.html.j2"),
+        ),
+        // Pages
         ("home", include_str!("../templates/home.html.j2")),
         ("error", include_str!("../templates/error.html.j2")),
     ];

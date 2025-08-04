@@ -1,0 +1,11 @@
+{% macro post_card(post) %}
+<a class="group" href="/post/{{ post.id }}">
+    <article class="rounded-lg p-6 mb-6 border-neutral-800 border-2 transition-colors">
+        <h2 class="text-xl font-semibold text-white hover:underline">{{ post.title }}</h2>
+        <p class="text-gray-400 mt-2">{{ post.description }}</p>
+        <div class="mt-4 text-sm text-gray-500">
+            <span>Publisert: {{ post.date|datetimeformat(format="short", tz="Europe/Oslo") }}</span>
+        </div>
+    </article>
+</a>
+{% endmacro %}

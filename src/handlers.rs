@@ -1,4 +1,4 @@
-use crate::{models::Post, xml::Xml, AppState};
+use crate::{error::MyStatusCode, models::Post, xml::Xml, AppState};
 
 use std::sync::Arc;
 
@@ -10,16 +10,16 @@ use axum::{
 };
 use minijinja::context;
 
-pub async fn root(State(state): State<Arc<AppState>>) -> Result<Html<String>, StatusCode> {
-    let template = state.env.get_template("home").unwrap();
-    let template = template.render(context! {}).unwrap();
+pub async fn root(State(state): State<Arc<AppState>>) -> Result<Html<String>, MyStatusCode> {
+    let posts = state.post_db.all();
+    let template = state.env.get_template("home")?.render(context! { posts })?;
 
     Ok(Html(template))
 }
 
-pub async fn fallback(State(state): State<Arc<AppState>>) -> Result<Html<String>, StatusCode> {
-    let template = state.env.get_template("error").unwrap();
-    let template = template.render(context! {}).unwrap();
+pub async fn fallback(State(state): State<Arc<AppState>>) -> Result<Html<String>, MyStatusCode> {
+    let template = state.env.get_template("error")?;
+    let template = template.render(context! {})?;
 
     Ok(Html(template))
 }
@@ -41,7 +41,7 @@ pub async fn feed(State(state): State<Arc<AppState>>) -> Result<Xml<String>, Sta
         .post_db
         .all()
         .iter()
-        .map(|p| p.to_item())
+        .map(|p| p.to_rss_item())
         .collect::<Vec<_>>()
         .join("\n");
 
