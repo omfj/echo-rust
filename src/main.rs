@@ -12,6 +12,7 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 mod error;
 mod handlers;
 mod models;
+mod upstream;
 mod xml;
 
 pub struct AppState {
